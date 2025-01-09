@@ -1,19 +1,15 @@
 <?php
-// Database connection settings
 $servername = "localhost";
-$username = "deemajabi"; // Replace with your MySQL username 
-$password = "dodo1122002";     // Replace with your MySQL password 
+$username = "deemajabi";  
+$password = "dodo1122002";      
 $dbname = "dictionary";
 
-// Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
 
-// Check connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Handle form submission
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $search_word = $conn->real_escape_string($_POST['word']);
     $sql = "SELECT definition FROM words WHERE word = '$search_word'";
