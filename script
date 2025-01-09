@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# Exit immediately if a command exits with a non-zero status
+set -e
+
+echo "Starting automation process..."
+
+# Step 1: Pull updates from the Git repository
+echo "Pulling updates from Git repository..."
+cd /path/to/your/project || exit 1
+git pull origin main
+
+# Step 2: Trigger the Jenkins job
+echo "Triggering Jenkins job..."
+JENKINS_URL="http://localhost:8080/job/YourJobName/build"
+JENKINS_USER="your_username"
+JENKINS_TOKEN="your_token"
+
+curl -X POST "${JENKINS_URL}" --user "${JENKINS_USER}:${JENKINS_TOKEN}"
+
+# Step 3: Deploy the updated application
+echo "Deploying the application..."
+docker-compose -f /path/to/docker-compose.yml up -d --build
+
+echo "Automation process completed successfully!"

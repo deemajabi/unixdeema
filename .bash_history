@@ -212,3 +212,40 @@ mysql -u deemajabi -p
 sudo mysql -u root -p
 mysql -u deemajabi -p
 nano /var/www/html/dictionary.php
+find . -name "*.php"
+ls -l
+nano dictionary.php
+make
+find . -name "*.php"
+find . -type f -newermt "2025-01-07" 
+ls -R
+ls -l
+nano dictionary.php
+vim dictionary.php
+git init
+git add .
+git commit -m "Initial commit"
+git remote add origin https://github.com/username/repository.git
+git remote add origin https://github.com/deemajabi/repository.git 
+git config --global user.name "deemajabi"
+git config --global user.email "dema202073@gmail.com"
+git remote add origin https://github.com/username/repository.git
+git clone https://github.com/deemajabi/unixdeema.git
+git remote add origin https://github.com/deemajabi/unixdeema.git
+git remote remove origin
+git remote add origin https://github.com/deemajabi/unixdeema.git
+git add .
+git commit -m "Initial commit"
+ls
+ls -a unixdeema
+git clone https://github.com/deemajabi/unixdeema.git
+ls
+cd unixdeema
+ls
+ls -a
+cd /path/to/directory
+git clone https://github.com/deemajabi/unixdeema.git
+ls
+touch script
+gedit script
+sudo apt update
