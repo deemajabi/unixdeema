@@ -1,0 +1,81 @@
+#include <mpi.h>
+#include <iostream>
+#include <fstream>
+#include <unordered_map>
+#include <string>
+#include <vector>
+
+// دالة لتوليد الـk-mers
+void compute_kmers(const std::string& sequence, int k, std::unordered_map<std::string, int>& kmer_counts) {
+    for (size_t i = 0; i <= sequence.size() - k; ++i) {
+        std::string kmer = sequence.substr(i, k);
+        kmer_counts[kmer]++;
+    }
+}
+
+// دالة لقراءة تسلسل الـDNA من الملف
+std::string read_dna_sequence(const std::string& filename) {
+    std::ifstream file(filename);
+    std::string sequence;
+    if (file.is_open()) {
+        std::getline(file, sequence);
+    }
+    return sequence;
+}
+
+int main(int argc, char** argv) {
+    MPI_Init(&argc, &argv);
+
+    int world_size;
+    MPI_Comm_size(MPI_COMM_WORLD, &world_size);
+
+    int world_rank;
+    MPI_Comm_rank(MPI_COMM_WORLD, &world_rank);
+
+    if (argc != 3) {
+        if (world_rank == 0) {
+            std::cerr << "Usage: " << argv[0] << " <dna_sequence_file> <k>" << std::endl;
+        }
+        MPI_Finalize();
+        return 1;
+    }
+
+    std::string dna_sequence;
+    int k = std::stoi(argv[2]);
+
+    // العملية الرئيسية تقوم بقراءة تسلسل الـDNA
+    if (world_rank == 0) {
+        dna_sequence = read_dna_sequence(argv[1]);
+    }
+
+    // توزيع طول التسلسل على جميع العمليات
+    int sequence_length = dna_sequence.size();
+    MPI_Bcast(&sequence_length, 1, MPI_INT, 0, MPI_COMM_WORLD);
+
+    // توزيع تسلسل الـDNA على العمليات
+    std::vector<char> local_sequence(sequence_length / world_size + k - 1);
+    MPI_Scatter(dna_sequence.data(), sequence_length / world_size, MPI_CHAR, 
+                local_sequence.data(), sequence_length / world_size, MPI_CHAR, 
+                0, MPI_COMM_WORLD);
+
+    // العمليات تقوم بحساب الـk-mers
+    std::unordered_map<std::string, int> local_kmer_counts;
+    std::string local_sequence_str(local_sequence.begin(), local_sequence.end());
+    compute_kmers(local_sequence_str, k, local_kmer_counts);
+
+    // جمع النتائج
+    if (world_rank == 0) {
+        std::unordered_map<std::string, int> global_kmer_counts;
+        for (const auto& kv : local_kmer_counts) {
+            global_kmer_counts[kv.first] += kv.second;
+        }
+
+        for (const auto& kv : global_kmer_counts) {
+            std::cout << kv.first << " : " << kv.second << std::endl;
+        }
+    }
+
+    MPI_Finalize();
+    return 0;
+}
+

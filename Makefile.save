@@ -1,0 +1,24 @@
+CC = g++
+CFLAGS = -pthread
+
+# الأهداف: تجميع وتشغيل البرنامج
+all: papply_filter apply_filter
+
+# تجميع البرنامج serial (apply_filter)
+apply_filter: apply_filter.cpp
+	$(CC) $(CFLAGS) -o apply_filter apply_filter.cpp
+
+# تجميع البرنامج parallel (papply_filter)
+papply_filter: papply_filter.cpp
+	$(CC) $(CFLAGS) -o papply_filter papply_filter.cpp
+
+# لتشغيل البرنامج
+run1:
+	./apply_filter oimage.txt BlurMask.txt output.txt
+
+run2:
+	./papply_filter oimage.txt BlurMask.txt output.txt 4
+
+# لتنظيف الملفات المترجمة (أو الإخراجات)
+clean:
+	rm -f apply_filter papply_filter output.txt
