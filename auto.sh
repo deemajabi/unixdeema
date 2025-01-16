@@ -1,25 +1,22 @@
 #!/bin/bash
 
-GIT_REPO_PATH="https://github.com/deemajabi/unixdeema"
-DEPLOYMENT_DIR="/path/to/deployment/directory"
-CONTAINER_NAME="your_container_name"
-IMAGE_NAME="your_image_name"
-GIT_BRANCH="main"
+# Step 4: Update Application Code
+echo "Updating application code..."
+git pull origin main
 
-cd $GIT_REPO_PATH || { echo "Git repository path not found"; exit 1; }
+# Step 5: Compile and Test Code
+echo "Compiling code..."
+# Add your compile command here (e.g., make or PHP test commands)
 
-git checkout $GIT_BRANCH
-git pull origin $GIT_BRANCH || { echo "Failed to pull from Git repository"; exit 1; }
+# Step 6: Build and Deploy Container
+echo "Building Docker image..."
+docker build -t unixdeema:latest .
 
-echo "Running tests..."
+echo "Stopping and removing old container..."
+docker stop unixdeema || true
+docker rm unixdeema || true
 
-docker stop $CONTAINER_NAME
-docker rm $CONTAINER_NAME
+echo "Deploying new container..."
+docker run -d -p 8080:80 --name unixdeema unixdeema:latest
 
-docker build -t $IMAGE_NAME $DEPLOYMENT_DIR || { echo "Failed to build Docker image"; exit 1; }
-
-docker run -d --name $CONTAINER_NAME $IMAGE_NAME || { echo "Failed to run Docker container"; exit 1; }
-
-docker system prune -f
-
-echo "Deployment completed successfully!"
+echo "Deployment complete. Application running on http://localhost:8080."
