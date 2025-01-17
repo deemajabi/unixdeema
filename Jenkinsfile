@@ -11,11 +11,7 @@ pipeline {
                 git "${REPO_URL}"
             }
         }
-        stage('Build') {
-            steps {
-                sh 'mvn clean package'
-            }
-        }
+       
         stage('Build Docker Image') {
             steps {
                 sh 'docker build -t ${IMAGE_NAME} .'
