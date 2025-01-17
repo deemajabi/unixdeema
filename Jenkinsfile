@@ -11,12 +11,25 @@ pipeline {
        
         stage('Clean') {
             steps {
-              sh 'cd unixdeema ; docker compose down'
+                script {
+                    if (fileExists('unixdeema/docker-compose.yml')) {
+                        sh 'cd unixdeema ; docker compose down'
+                    } else {
+                        echo 'docker-compose.yml not found, skipping docker compose down'
+                    }
+                }
             }
         }
+        
         stage('Run Container') {
             steps {
-               sh 'cd unixdeema ; docker compose up -d'
+                script {
+                    if (fileExists('unixdeema/docker-compose.yml')) {
+                        sh 'cd unixdeema ; docker compose up -d'
+                    } else {
+                        echo 'docker-compose.yml not found, skipping docker compose up'
+                    }
+                }
             }
         }
     }
