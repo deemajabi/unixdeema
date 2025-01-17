@@ -6,7 +6,7 @@ pipeline {
             steps {
                 sh 'ls -l'
                 sh 'rm -rf unixdeema'
-                git url: 'https://github.com/deemajabi/unixdeema.git'
+                sh'git clone https://github.com/deemajabi/unixdeema.git'
             }
         }
        
