@@ -1,7 +1,7 @@
 <?php
 
 $servername = "localhost";
-$username = "deemajabi";  
+$username = "root";  
 $password = "dodo1122002";     
 $dbname = "dictionary";
 
