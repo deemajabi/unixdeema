@@ -13,6 +13,7 @@ pipeline {
             steps {
                 sh'''
                 cd unixdeema
+                ls -l
                 docker compose down
                 '''
             }
