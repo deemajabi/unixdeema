@@ -1,7 +1,7 @@
 <?php
 $servername = "localhost";
-$username = "deemajabi";  
-$password = "dodo1122002";      
+$username = "deemajabi";
+$password = "dodo1122002";
 $dbname = "dictionary";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -44,3 +44,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <?php endif; ?>
 </body>
 </html>
+
+
+
