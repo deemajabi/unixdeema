@@ -4,6 +4,7 @@ pipeline {
     stages {
         stage('Clone Repository') {
             steps {
+                sh 'ls -l'
                 sh 'rm -rf unixdeema'
                 git url: 'https://github.com/deemajabi/unixdeema.git'
             }
@@ -11,19 +12,16 @@ pipeline {
        
         stage('Clean') {
             steps {
-                sh'''
-                cd unixdeema
-                ls -l
-                docker compose down
-                '''
+                sh 'ls -l'
+                sh 'cd unixdeema'
+                sh 'ls -l'
+                sh 'docker compose down'
             }
         }
         stage('Run Container') {
             steps {
-                sh'''
-                cd unixdeema
-                docker compose up -d
-                '''
+                sh 'cd unixdeema'
+                sh 'docker compose up -d'
             }
         }
     }
