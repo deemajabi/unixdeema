@@ -11,8 +11,7 @@ pipeline {
        
         stage('Clean') {
             steps {
-                sh
-                '''
+                sh '''
                 cd unixdeema
                 docker compose down
                 '''
@@ -20,8 +19,7 @@ pipeline {
         }
         stage('Run Container') {
             steps {
-                sh 
-                '''
+                sh '''
                 cd unixdeema
                 docker compose up -d
                 '''
