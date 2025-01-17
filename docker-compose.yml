@@ -1,14 +1,12 @@
-version: '3.8' # Specify the version
-
 services:
   www:
     build:
       context: .
       dockerfile: Dockerfile
     volumes:
-      - ./html:/var/www/html
+      - ./site:/var/www/html
     ports:
-      - "80:80"
+      - "76:80"
     depends_on:
       - db
 
@@ -17,18 +15,10 @@ services:
     restart: always
     volumes:
       - mysql:/var/lib/mysql
+      - ./sqlfolder:/docker-entrypoint-initdb.d
     environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD} # Use environment variable
-
-  phpmyadmin:
-    image: phpmyadmin
-    restart: always
-    ports:
-      - 8080:80
-    depends_on:
-      - db
-    environment:
-      - PMA_ARBITRARY=1
+      MYSQL_DATABASE: dictionary
+      MYSQL_ROOT_PASSWORD: dodo1122002 # Use environment variable
 
 volumes:
   mysql:
