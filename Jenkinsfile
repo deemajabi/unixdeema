@@ -5,7 +5,7 @@ pipeline {
         stage('Clone Repository') {
             steps {
                 sh 'rm -rf unixdeema'
-                git clone "https://github.com/deemajabi/unixdeema"
+                git url: 'https://github.com/deemajabi/unixdeema.git'
             }
         }
        
