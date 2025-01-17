@@ -11,14 +11,20 @@ pipeline {
        
         stage('Clean') {
             steps {
-                sh 'cd unixdeema'
-                sh 'docker compose down'
+                sh
+                '''
+                cd unixdeema
+                docker compose down
+                '''
             }
         }
         stage('Run Container') {
             steps {
-                sh 'cd unixdeema'
-                sh 'docker compose up -d'
+                sh 
+                '''
+                cd unixdeema
+                docker compose up -d
+                '''
             }
         }
     }
