@@ -93,7 +93,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 <body>
     <div class="container">
-        <h1>Word Lookup</h1>
+        <h1>rootd</h1>
         <form method="POST" action="">
             <input type="text" name="word" placeholder="Enter a word" required>
             <button type="submit">Lookup</button>
