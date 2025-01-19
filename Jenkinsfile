@@ -1,25 +1,27 @@
 pipeline {
     agent any
-    environment {
-        REPO_URL = 'https://github.com/deemajabi/unixdeema.git'
-        IMAGE_NAME = 'unixdeema-app'
-        CONTAINER_NAME = 'unixdeema-container'
-    }
+
     stages {
         stage('Clone Repository') {
             steps {
-                git "${REPO_URL}"
+                sh 'ls -l'
+                sh 'rm -rf unixdeema'
+                sh'git clone https://github.com/deemajabi/unixdeema.git'
             }
         }
        
-        stage('Build Docker Image') {
+        stage('Clean') {
             steps {
-                sh 'docker build -t ${IMAGE_NAME} .'
+                sh 'ls -l'
+                sh 'cd unixdeema'
+                sh 'ls -l'
+                sh 'docker compose down'
             }
         }
         stage('Run Container') {
             steps {
-                sh 'docker run -d -p 8080:8080 --name ${CONTAINER_NAME} ${IMAGE_NAME}'
+                sh 'cd unixdeema'
+                sh 'docker compose up -d'
             }
         }
     }

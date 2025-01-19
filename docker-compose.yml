@@ -1,0 +1,24 @@
+services:
+  www:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./site:/var/www/html
+    ports:
+      - "76:80"
+    depends_on:
+      - db
+
+  db:
+    image: mysql
+    restart: always
+    volumes:
+      - mysql:/var/lib/mysql
+      - ./sqlfolder:/docker-entrypoint-initdb.d
+    environment:
+      MYSQL_DATABASE: dictionary
+      MYSQL_ROOT_PASSWORD: dodo1122002 # Use environment variable
+
+volumes:
+  mysql:

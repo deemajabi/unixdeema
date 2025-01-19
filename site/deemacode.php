@@ -1,21 +1,21 @@
 <?php
-// Database connection details
+
 $servername = "db";
 $username = "root";  
 $password = "dodo1122002";     
 $dbname = "dictionary";
 
-// Create connection
+
 $conn = new mysqli($servername, $username, $password, $dbname);
 
-// Check connection
+
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-$definition = ""; // Initialize the definition variable
+$definition = ""; 
 
-// Handle form submission
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $search_word = $conn->real_escape_string($_POST['word']);
     $sql = "SELECT definition FROM words WHERE word = '$search_word'";
@@ -93,7 +93,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 <body>
     <div class="container">
-        <h1>Word Lookup</h1>
+        <h1>word lookup</h1>
         <form method="POST" action="">
             <input type="text" name="word" placeholder="Enter a word" required>
             <button type="submit">Lookup</button>
